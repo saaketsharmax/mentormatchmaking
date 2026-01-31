@@ -8,6 +8,12 @@ node_modules/
 backend/.env
 frontend/.env.local
 
+# API keys (never commit these)
+**/sk-ant-*
+**/sk-*
+*.key
+*.pem
+
 # Database files
 *.db
 *.sqlite
