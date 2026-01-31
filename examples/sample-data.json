@@ -1,0 +1,218 @@
+{
+  "exampleBottleneck": {
+    "raw": {
+      "rawBlocker": "We can't close enterprise deals. We've had 15 demos over the past 2 months but zero conversions. Prospects say they love the product, but the deal stalls after security review or just goes dark. We're burning runway and I don't know if the problem is the product, the pitch, or the process.",
+      "rawAttempts": "We've tried: (1) Following up more aggressively - didn't help, felt desperate. (2) Offering discounts - they weren't price sensitive, that wasn't the issue. (3) Bringing in a 'sales advisor' for 2 weeks - gave generic advice that didn't move the needle. (4) Creating more case study content - but we don't have real case studies yet.",
+      "rawSuccessCriteria": "Close our first enterprise customer (ARR > $50k). Even one deal would validate our sales motion and give us a reference customer."
+    },
+    "structured": {
+      "problemArchetype": {
+        "category": "FIRST_CUSTOMERS",
+        "subPattern": "first enterprise sale with no track record in B2B SaaS",
+        "shapeDescription": "Attempting to close enterprise deals without established credibility, case studies, or a proven sales process. Classic cold-start problem where prospects like the product but can't justify the risk of being first."
+      },
+      "problemStatement": "Cannot convert interested enterprise prospects into paying customers due to lack of credibility and unclear buying process.",
+      "constraints": [
+        {
+          "type": "TIME",
+          "description": "Burning runway with no revenue; need to close within 1-2 months",
+          "severity": "HARD"
+        },
+        {
+          "type": "FOUNDER_EXPERIENCE",
+          "description": "No prior enterprise sales experience on the team",
+          "severity": "HARD"
+        },
+        {
+          "type": "COMPETITIVE",
+          "description": "Prospects may be comparing to established vendors",
+          "severity": "SOFT"
+        }
+      ],
+      "urgency": "HIGH",
+      "stageContext": {
+        "stage": "PRE_SEED",
+        "teamSize": 3,
+        "monthsOfRunway": 4,
+        "hasProduct": true,
+        "hasRevenue": false,
+        "hasFunding": true
+      },
+      "attemptedSolutions": [
+        {
+          "description": "Aggressive follow-up cadence",
+          "outcome": "Prospects went dark faster",
+          "whyItFailed": "Came across as desperate; didn't address their underlying concerns"
+        },
+        {
+          "description": "Offering discounts",
+          "outcome": "No impact on conversion",
+          "whyItFailed": "Price wasn't the blocker; it was trust/risk"
+        },
+        {
+          "description": "Short-term sales advisor",
+          "outcome": "Generic playbook that didn't fit their situation",
+          "whyItFailed": "Advisor had B2C and SMB experience, not enterprise B2B"
+        }
+      ],
+      "successCriteria": {
+        "description": "Close first enterprise customer with ARR > $50k",
+        "timeframe": "14 days",
+        "measurable": true
+      },
+      "signals": {
+        "hasProductMarketFit": null,
+        "hasRevenue": false,
+        "isTechnicalProblem": false,
+        "isGTMProblem": true,
+        "isPeopleProblem": false,
+        "isOperationalProblem": false,
+        "isFundraisingProblem": false
+      }
+    }
+  },
+  "exampleExperience": {
+    "raw": {
+      "rawProblem": "We needed to close our first 3 enterprise customers for a compliance SaaS product, but we had no brand, no case studies, and prospects kept ghosting after the demo. Security and procurement teams were black boxes.",
+      "rawContext": "Series Seed, team of 4. We'd raised $1.5M but had 8 months of runway left. I was the CEO doing all the sales myself. We'd done about 20 demos with 0 conversions. Tried cold email sequences, tried LinkedIn outreach, tried content marketing - none of it was moving deals forward. The product was solid but nobody wanted to be first.",
+      "rawSolution": "I completely changed our approach. Instead of pitching our product, I started pitching a 'design partnership' - 3 months free in exchange for their input on the roadmap and a case study. I also stopped selling to the end-user and started mapping the buying committee first. Found the internal champion, then asked THEM who else needed to approve. Let them sell internally while I armed them with materials. The key was reducing their risk to near-zero while making them look good internally.",
+      "rawOutcomes": "Closed 3 enterprise customers in 4 months (all $40-80k ARR). One became our biggest reference customer. The design partnership model became our standard playbook for the next 2 years until we had enough credibility to sell normally. Raised Series A 6 months later partially on the strength of those logos."
+    },
+    "structured": {
+      "problemArchetype": {
+        "category": "FIRST_CUSTOMERS",
+        "subPattern": "first enterprise sale with no track record in B2B SaaS",
+        "shapeDescription": "Cold-start enterprise sales where prospects liked the product but couldn't justify being first. Required overcoming credibility gap and navigating complex buying committees without a playbook."
+      },
+      "problemStatement": "Needed to close first enterprise customers for a compliance SaaS product with no brand recognition or case studies.",
+      "context": {
+        "stage": "SEED",
+        "teamSize": 4,
+        "yearOccurred": 2021,
+        "companyType": "B2B SaaS (compliance/security)",
+        "role": "CEO (founder-led sales)",
+        "hadFunding": true,
+        "hadRevenue": false
+      },
+      "constraints": [
+        {
+          "type": "TIME",
+          "description": "8 months of runway remaining",
+          "severity": "HARD"
+        },
+        {
+          "type": "TEAM_SIZE",
+          "description": "Solo founder doing all sales",
+          "severity": "HARD"
+        },
+        {
+          "type": "COMPETITIVE",
+          "description": "Selling against established compliance vendors",
+          "severity": "SOFT"
+        }
+      ],
+      "failedApproaches": [
+        {
+          "description": "Cold email sequences with product-focused messaging",
+          "whyItFailed": "High-volume, low-context outreach didn't build trust needed for enterprise deals",
+          "lessonLearned": "Enterprise sales is about trust-building, not volume"
+        },
+        {
+          "description": "LinkedIn outreach to end-users",
+          "whyItFailed": "End-users couldn't make buying decisions; needed executive sponsorship",
+          "lessonLearned": "Map the buying committee before starting any sales motion"
+        },
+        {
+          "description": "Content marketing to generate inbound",
+          "whyItFailed": "Takes 6-12 months to generate meaningful inbound; didn't have time",
+          "lessonLearned": "Content is long-term; need different strategy for first customers"
+        }
+      ],
+      "successfulApproach": {
+        "description": "Design partnership model: 3 months free in exchange for input + case study. Mapped buying committee first, armed internal champion with materials.",
+        "keyActions": [
+          "Reframed pitch from 'buy our product' to 'partner with us to shape the product'",
+          "Asked prospects to introduce their internal stakeholders (security, procurement, legal)",
+          "Created internal selling materials for champions to use",
+          "Reduced risk to near-zero with free trial + executive sponsorship"
+        ],
+        "whyItWorked": "Eliminated the risk of being first by making it a partnership. Made the champion look good internally by positioning them as innovative.",
+        "timeToResults": "4 months to close first 3 customers"
+      },
+      "outcomes": [
+        {
+          "metric": "Enterprise customers",
+          "before": "0",
+          "after": "3",
+          "timeframe": "4 months"
+        },
+        {
+          "metric": "ARR per customer",
+          "before": "$0",
+          "after": "$40-80k",
+          "timeframe": "4 months"
+        }
+      ],
+      "insights": [
+        {
+          "insight": "First enterprise customers require a fundamentally different motion than scaling sales. Reduce their risk to near-zero.",
+          "whenApplicable": "Pre-revenue or early-revenue B2B SaaS selling to enterprise",
+          "whenNotApplicable": "Once you have 5+ reference customers and case studies"
+        },
+        {
+          "insight": "Never sell to just the end-user. Map the buying committee early and arm your champion with internal selling materials.",
+          "whenApplicable": "Any enterprise deal with multiple stakeholders",
+          "whenNotApplicable": "SMB or self-serve sales"
+        }
+      ],
+      "applicability": {
+        "stageRange": ["PRE_SEED", "SEED"],
+        "industrySpecific": false,
+        "industries": [],
+        "timeSensitivity": "EVERGREEN"
+      }
+    }
+  },
+  "exampleMatch": {
+    "score": 87,
+    "confidence": "HIGH",
+    "explanation": "This mentor navigated the exact challenge you're facing: closing first enterprise deals in B2B SaaS with no brand recognition or case studies. They went from 0 to 3 enterprise customers in 4 months using a 'design partnership' model that reduces prospect risk to near-zero. Their experience with compliance SaaS means they understand the security review and procurement dynamics you're hitting. Most importantly, they failed at the same things you've tried (aggressive follow-up, discounts, generic advisors) before finding what worked.",
+    "reasoning": {
+      "scores": {
+        "problemShapeSimilarity": 95,
+        "constraintAlignment": 85,
+        "stageRelevance": 90,
+        "experienceDepth": 85,
+        "recency": 75
+      },
+      "weights": {
+        "problemShapeSimilarity": 0.40,
+        "constraintAlignment": 0.25,
+        "stageRelevance": 0.20,
+        "experienceDepth": 0.10,
+        "recency": 0.05
+      },
+      "componentReasoning": {
+        "problemShapeSimilarity": "Both are 'first enterprise sale with no track record' problems in B2B SaaS. Same archetype category, same sub-pattern. The mentor solved exactly this problem.",
+        "constraintAlignment": "Strong alignment on runway pressure and solo founder sales. Mentor had slightly more runway (8 vs 4 months) but similar urgency. No conflicting constraints.",
+        "stageRelevance": "Mentor's experience at Seed stage is directly applicable to pre-seed. Adjacent stages with similar dynamics.",
+        "experienceDepth": "Deep experience demonstrated by multiple failed approaches documented with lessons learned, specific tactical actions, and measurable outcomes.",
+        "recency": "2021 experience is recent enough to be relevant. Enterprise sales fundamentals haven't changed significantly."
+      },
+      "keyAlignments": [
+        "Identical problem archetype: first enterprise sale in B2B SaaS with no credibility",
+        "Failed approaches overlap: both tried aggressive follow-up and generic advisors",
+        "Constraint match: founder-led sales with runway pressure"
+      ],
+      "concerns": [
+        "Mentor's experience was in compliance SaaS; may have industry-specific dynamics",
+        "Founder has 4 months runway vs mentor's 8; may need faster path to close"
+      ],
+      "confidenceFactors": {
+        "dataQuality": "HIGH",
+        "archetypeClarity": "HIGH",
+        "constraintOverlap": "HIGH"
+      }
+    }
+  }
+}

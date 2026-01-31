@@ -1,0 +1,213 @@
+// Sanctuary Network Intelligence - Production Database Schema
+// PostgreSQL with proper JSON types and enums
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum StartupStage {
+  PRE_SEED
+  SEED
+  SERIES_A
+  SERIES_B_PLUS
+  GROWTH
+}
+
+enum BottleneckStatus {
+  PENDING
+  STRUCTURED
+  MATCHING
+  MATCHED
+  FAILED
+}
+
+enum MatchStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  INTRO_SENT
+  COMPLETED
+}
+
+enum MatchConfidence {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum FeedbackRating {
+  HIGHLY_USEFUL
+  SOMEWHAT_USEFUL
+  NOT_USEFUL
+}
+
+// =============================================================================
+// CORE ENTITIES
+// =============================================================================
+
+model Startup {
+  id              String       @id @default(cuid())
+  name            String
+  founderName     String
+  email           String       @unique
+  stage           StartupStage @default(PRE_SEED)
+  teamSize        Int?
+  productMaturity String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  bottlenecks Bottleneck[]
+
+  @@index([email])
+}
+
+model Mentor {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  bio         String?  @db.Text
+  linkedinUrl String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  experiences Experience[]
+  matches     Match[]
+
+  @@index([email])
+  @@index([isActive])
+}
+
+// =============================================================================
+// BOTTLENECK (Startup Problem Submission)
+// =============================================================================
+
+model Bottleneck {
+  id        String   @id @default(cuid())
+  startupId String
+  startup   Startup  @relation(fields: [startupId], references: [id], onDelete: Cascade)
+
+  // Raw input from founder
+  rawBlocker         String @db.Text
+  rawAttempts        String @db.Text
+  rawSuccessCriteria String @db.Text
+
+  // Structured representation (JSON)
+  structured Json?
+
+  status    BottleneckStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  matches Match[]
+
+  @@index([startupId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Experience {
+  id       String @id @default(cuid())
+  mentorId String
+  mentor   Mentor @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+
+  // Raw narrative from mentor
+  rawProblem  String @db.Text
+  rawContext  String @db.Text
+  rawSolution String @db.Text
+  rawOutcomes String @db.Text
+
+  // Structured representation (JSON)
+  structured Json?
+
+  // Metadata
+  yearOccurred Int?
+  companyStage String?
+  isVerified   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matches Match[]
+
+  @@index([mentorId])
+  @@index([isVerified])
+}
+
+// =============================================================================
+// MATCHING
+// =============================================================================
+
+model Match {
+  id           String     @id @default(cuid())
+  bottleneckId String
+  bottleneck   Bottleneck @relation(fields: [bottleneckId], references: [id], onDelete: Cascade)
+  experienceId String
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  mentorId     String
+  mentor       Mentor     @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+
+  // Match quality
+  score      Int
+  confidence MatchConfidence
+
+  // Reasoning breakdown (JSON)
+  reasoning Json
+
+  // Human-readable explanation
+  explanation String @db.Text
+
+  // Operator actions
+  status        MatchStatus @default(PENDING)
+  operatorId    String?
+  operatorNotes String?     @db.Text
+
+  // Intro tracking
+  introSentAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  feedback Feedback?
+
+  @@unique([bottleneckId, experienceId])
+  @@index([bottleneckId])
+  @@index([mentorId])
+  @@index([status])
+  @@index([score])
+  @@index([createdAt])
+}
+
+model Feedback {
+  id      String @id @default(cuid())
+  matchId String @unique
+  match   Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  rating FeedbackRating
+
+  // Detailed feedback
+  wasRelevant    Boolean?
+  wasActionable  Boolean?
+  wouldRecommend Boolean?
+  founderNotes   String?  @db.Text
+  operatorNotes  String?  @db.Text
+
+  // For learning loop
+  processedForLearning Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([rating])
+  @@index([processedForLearning])
+  @@index([createdAt])
+}

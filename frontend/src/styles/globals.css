@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-off-white font-mono text-black uppercase;
+    background-image:
+      linear-gradient(to right, #e5e5d5 1px, transparent 1px),
+      linear-gradient(to bottom, #e5e5d5 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  body.dark {
+    @apply bg-brutal-black text-off-white;
+    background-image:
+      linear-gradient(to right, #1a1a1a 1px, transparent 1px),
+      linear-gradient(to bottom, #1a1a1a 1px, transparent 1px);
+  }
+}
+
+@layer components {
+  .brutal-border {
+    @apply border-4 border-black;
+  }
+
+  .brutal-border-light {
+    @apply border-4 border-off-white;
+  }
+
+  .brutal-shadow {
+    box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+  }
+
+  .brutal-shadow-orange {
+    box-shadow: 6px 6px 0px 0px rgba(255, 95, 31, 0.6);
+  }
+
+  .brutal-shadow-hover:hover {
+    box-shadow: 12px 12px 0px 0px rgba(0, 0, 0, 1);
+  }
+
+  .btn-brutal {
+    @apply bg-black text-white font-black uppercase text-lg py-4 px-8 brutal-border hover:bg-white hover:text-black transition-colors duration-100 flex items-center justify-between tracking-tighter;
+  }
+
+  .btn-brutal-outline {
+    @apply bg-white text-black font-black uppercase text-sm py-3 px-6 brutal-border hover:bg-black hover:text-white transition-colors;
+  }
+
+  .btn-brutal-primary {
+    @apply bg-primary text-black font-black uppercase text-lg py-4 px-8 brutal-border hover:bg-white transition-colors tracking-tighter;
+  }
+
+  .input-brutal {
+    @apply w-full bg-transparent brutal-border py-3 px-4 text-sm font-bold uppercase focus:ring-0 focus:border-primary placeholder:text-gray-400 tracking-wider;
+  }
+
+  .textarea-brutal {
+    @apply w-full bg-transparent brutal-border py-4 px-4 text-sm font-bold uppercase focus:ring-0 focus:border-primary placeholder:text-gray-400 resize-none;
+  }
+
+  .label-brutal {
+    @apply text-[10px] font-bold uppercase tracking-widest text-gray-500 block mb-2;
+  }
+
+  .card-brutal {
+    @apply bg-white brutal-border brutal-shadow;
+  }
+
+  .header-block {
+    @apply font-black uppercase tracking-tighter leading-none;
+  }
+
+  .badge-brutal {
+    @apply px-2 py-1 text-[10px] font-black uppercase brutal-border;
+  }
+
+  .badge-high {
+    @apply bg-match-high text-black;
+  }
+
+  .badge-medium {
+    @apply bg-match-med text-black;
+  }
+
+  .badge-low {
+    @apply bg-match-low text-white;
+  }
+
+  .grid-cell {
+    @apply border-b-4 border-r-4 border-black p-6;
+  }
+
+  .score-display {
+    @apply text-5xl font-black leading-none;
+  }
+
+  .mono-text {
+    @apply font-mono;
+  }
+
+  .nav-link {
+    @apply text-xs font-bold uppercase hover:text-primary transition-colors;
+  }
+
+  .nav-link-active {
+    @apply text-primary underline decoration-2 underline-offset-4;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0ede4;
+  border-left: 4px solid black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border: 2px solid #f0ede4;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF5F1F;
+}
+
+/* Selection */
+::selection {
+  background: #FF5F1F;
+  color: black;
+}

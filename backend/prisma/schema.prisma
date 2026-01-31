@@ -1,0 +1,163 @@
+// Sanctuary Network Intelligence - Database Schema
+// SQLite for local development
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// =============================================================================
+// CORE ENTITIES
+// =============================================================================
+
+model Startup {
+  id          String   @id @default(cuid())
+  name        String
+  founderName String
+  email       String   @unique
+  stage       String   @default("PRE_SEED")
+  teamSize    Int?
+  productMaturity String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bottlenecks Bottleneck[]
+}
+
+model Mentor {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  bio         String?
+  linkedinUrl String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  experiences Experience[]
+  matches     Match[]
+}
+
+// =============================================================================
+// BOTTLENECK (Startup Problem Submission)
+// =============================================================================
+
+model Bottleneck {
+  id        String   @id @default(cuid())
+  startupId String
+  startup   Startup  @relation(fields: [startupId], references: [id])
+
+  // Raw input from founder
+  rawBlocker       String
+  rawAttempts      String
+  rawSuccessCriteria String
+
+  // Structured representation (stored as JSON string)
+  structured       String?
+
+  status    String @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matches   Match[]
+
+  @@index([startupId])
+  @@index([status])
+}
+
+model Experience {
+  id        String   @id @default(cuid())
+  mentorId  String
+  mentor    Mentor   @relation(fields: [mentorId], references: [id])
+
+  // Raw narrative from mentor
+  rawProblem       String
+  rawContext       String
+  rawSolution      String
+  rawOutcomes      String
+
+  // Structured representation (stored as JSON string)
+  structured       String?
+
+  // Metadata
+  yearOccurred     Int?
+  companyStage     String?
+  isVerified       Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matches   Match[]
+
+  @@index([mentorId])
+}
+
+// =============================================================================
+// MATCHING
+// =============================================================================
+
+model Match {
+  id            String   @id @default(cuid())
+  bottleneckId  String
+  bottleneck    Bottleneck @relation(fields: [bottleneckId], references: [id])
+  experienceId  String
+  experience    Experience @relation(fields: [experienceId], references: [id])
+  mentorId      String
+  mentor        Mentor     @relation(fields: [mentorId], references: [id])
+
+  // Match quality
+  score         Int
+  confidence    String
+
+  // Reasoning breakdown (stored as JSON string)
+  reasoning     String
+
+  // Human-readable explanation
+  explanation   String
+
+  // Operator actions
+  status        String @default("PENDING")
+  operatorId    String?
+  operatorNotes String?
+
+  // Intro tracking
+  introSentAt   DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  feedback      Feedback?
+
+  @@unique([bottleneckId, experienceId])
+  @@index([bottleneckId])
+  @@index([mentorId])
+  @@index([score])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  matchId   String   @unique
+  match     Match    @relation(fields: [matchId], references: [id])
+
+  rating    String
+
+  // Detailed feedback
+  wasRelevant       Boolean?
+  wasActionable     Boolean?
+  wouldRecommend    Boolean?
+  founderNotes      String?
+  operatorNotes     String?
+
+  // For learning loop
+  processedForLearning Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([rating])
+  @@index([processedForLearning])
+}
